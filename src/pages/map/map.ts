@@ -5,14 +5,16 @@ import { NavController, Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-map',
-  templateUrl: 'map.html'
+  templateUrl: './map.html'
 })
 export class MapPage {
 
 	@ViewChild('map') mapElement: ElementRef;
+  mapDetails: any;
+  position: any;
 	@ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-
-	constructor(public navCtrl: NavController, public maps: GoogleMaps, public platform: Platform, public locations: Locations) {
+	public navCtrl: NavController
+	constructor(  public maps: GoogleMaps, public platform: Platform, public locations: Locations) {
 
 	}
 

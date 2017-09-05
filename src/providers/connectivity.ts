@@ -14,19 +14,21 @@ export class Connectivity {
   }
 
   isOnline(): boolean {
-    if(this.onDevice && Network.connection){
-      return Network.connection !== Connection.NONE;
-    } else {
-      return navigator.onLine; 
-    }
+    // if(this.onDevice && Network.connection){
+    //   return Network.connection !== Connection.NONE;
+    // } else {
+    //   return navigator.onLine;
+    // }
+    return true;
   }
 
   isOffline(): boolean {
-    if(this.onDevice && Network.connection){
-      return Network.connection === Connection.NONE;
-    } else {
-      return !navigator.onLine;   
-    }
+    // if(this.onDevice && Network.connection){
+    //   return Network.connection !== Connection.NONE;
+    // } else {
+    //   return navigator.onLine;
+    // }
+    return false;
   }
-  
+
 }

@@ -7,11 +7,13 @@ import { Locations } from '../../providers/locations';
   templateUrl: 'list.html'
 })
 export class ListPage {
+private navCtrl: NavController
 
-  constructor(public navCtrl: NavController, public locations: Locations) {}
+  constructor( public locations: Locations) {}
 
   ionViewDidLoad() {
     console.log('Hello ListPage Page');
   }
+  
 
 }

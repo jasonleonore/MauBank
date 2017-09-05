@@ -1,12 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { Connectivity } from './connectivity';
 import { Geolocation } from 'ionic-native';
+import { NavController, NavParams } from 'ionic-angular';
 
 declare var google;
 
+class NavigationParameters {
+  data = {
+    user: {
+          _id: "001",
+          name: "Mike",
+    }
+ };
+
+ get(param){
+   return this.data[param];
+ }
+}
+
 @Injectable()
 export class GoogleMaps {
-
+// @ViewChild('map') mapElement: ElementRef;
   mapElement: any;
   pleaseConnect: any;
   map: any;
@@ -15,10 +29,13 @@ export class GoogleMaps {
   mapLoadedObserver: any;
   markers: any = [];
   apiKey: string;
-
-  constructor(public connectivityService: Connectivity) {
+  shoplatitude: any;
+  shoplongitude: any;
+  public navCtrl: NavController;
+  constructor( public connectivityService: Connectivity,) {
 
   }
+
 
   init(mapElement: any, pleaseConnect: any): Promise<any> {
 
@@ -55,12 +72,12 @@ export class GoogleMaps {
           if(this.apiKey){
             script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
           } else {
-            script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';       
+            script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
           }
 
-          document.body.appendChild(script);  
+          document.body.appendChild(script);
 
-        } 
+        }
       }
       else {
 
@@ -89,9 +106,9 @@ export class GoogleMaps {
       Geolocation.getCurrentPosition().then((position) => {
 
       	// UNCOMMENT FOR NORMAL USE
-        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        let latLng = new google.maps.LatLng(40.713744, -74.009056);
+        // let latLng = new google.maps.LatLng(-19.9944433,57.5923818);
 
         let mapOptions = {
           center: latLng,
@@ -134,7 +151,7 @@ export class GoogleMaps {
 
         if(typeof google == "undefined" || typeof google.maps == "undefined"){
           this.loadGoogleMaps();
-        } 
+        }
         else {
           if(!this.mapInitialised){
             this.initMap();
@@ -158,7 +175,10 @@ export class GoogleMaps {
   }
 
   addMarker(lat: number, lng: number): void {
-
+//     // this.shoplatitude = this.navParams.get('shoplatitude');
+//     // this.shoplongitude = this.navParams.get('shoplongitude');
+// this.shoplatitude = 100;
+// this.shoplongitude = 100;
     let latLng = new google.maps.LatLng(lat, lng);
 
     let marker = new google.maps.Marker({
@@ -167,8 +187,8 @@ export class GoogleMaps {
       position: latLng
     });
 
-    this.markers.push(marker);  
-      
+    this.markers.push(marker);
+
   }
 
 }

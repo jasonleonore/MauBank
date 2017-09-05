@@ -7,13 +7,25 @@ import { ListPage } from '../pages/list/list';
 import { Locations } from '../providers/locations';
 import { GoogleMaps } from '../providers/google-maps';
 import { Connectivity } from '../providers/connectivity';
+import { shopservice } from '../providers/shopservice';
+import { MallPage } from '../pages/mall/mall';
+import { BagatellePage } from '../pages/mall/bagatelle/bagatelle';
+import { DiscountPage } from '../pages/mall/bagatelle/discount/discount';
+import { CityPage } from '../pages/mall/bagatelle/city/city';
+import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     MapPage,
-    ListPage
+    ListPage,
+    MallPage,
+    BagatellePage,
+    DiscountPage,
+    CityPage,
+    ShafiqPage
+
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,8 +35,13 @@ import { Connectivity } from '../providers/connectivity';
     MyApp,
     HomePage,
     MapPage,
-    ListPage
+    ListPage,
+    MallPage,
+    BagatellePage,
+    DiscountPage,
+    CityPage,
+    ShafiqPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Locations, GoogleMaps, Connectivity]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Locations, GoogleMaps, Connectivity, shopservice]
 })
 export class AppModule {}
