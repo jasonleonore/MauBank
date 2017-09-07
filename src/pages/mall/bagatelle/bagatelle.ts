@@ -50,20 +50,7 @@ for(let index = 0; index <res.length; index++){
       }
   )
   }
-  // getDiscountData() {
-  //   this.shopservice.getDiscount(this.currentDiscountID).then((res:Array<Discount>) =>{
-  //     for(let index = 0; index <res.length; index++){
-  //       let currentDiscountInstance = res[index];
-  //       console.log(this.discounts);
-  //       this.discounts.push(new Discount(currentDiscountInstance.DiscountID, currentDiscountInstance.DiscountHeading, currentDiscountInstance.DiscountText, currentDiscountInstance.DiscountPicture))
-  //     }
-  //   },
-  //     err =>{
-  //       console.log(err);
-  //       alert(err);
-  //     }
-  // )
-  //   }
+
   dismiss(){
     this.navCtrl.push(MallPage);
   }

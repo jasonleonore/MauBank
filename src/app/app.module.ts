@@ -13,6 +13,7 @@ import { BagatellePage } from '../pages/mall/bagatelle/bagatelle';
 import { DiscountPage } from '../pages/mall/bagatelle/discount/discount';
 import { CityPage } from '../pages/mall/bagatelle/city/city';
 import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
+import { BataPage } from '../pages/mall/bagatelle/bata/bata';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
     BagatellePage,
     DiscountPage,
     CityPage,
-    ShafiqPage
+    ShafiqPage,
+    BataPage
 
   ],
   imports: [
@@ -40,7 +42,8 @@ import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
     BagatellePage,
     DiscountPage,
     CityPage,
-    ShafiqPage
+    ShafiqPage,
+    BataPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Locations, GoogleMaps, Connectivity, shopservice]
 })
