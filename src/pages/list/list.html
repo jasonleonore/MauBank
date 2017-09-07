@@ -17,9 +17,10 @@
 			<h2>{{location.title}}</h2>
 			<p>{{location.distance}} km</p>
 		</ion-item> -->
-    <ion-item>
+    <ion-item *ngFor="let Shop of this.locations.data">
       <h2>{{Shop.ShopName}} </h2>
-      <h3> </h3>
+      <p>{{Shop.distance}} km</p>
+
     </ion-item>
 	</ion-list>
 

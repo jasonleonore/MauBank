@@ -5,7 +5,7 @@ import { Geolocation } from 'ionic-native';
 declare var google;
 import { shopservice } from '../providers/shopservice';
 import { Shop } from '../models/shop';
-// 
+//
 // @Component({
 // 	providers: [shopservice]
 // })
@@ -23,17 +23,21 @@ export class Locations {
 
 	load(){
 
-		if(this.data){
-			return Promise.resolve(this.data);
-		}
+		// if(this.data){
+		// 	this.getShopData();
+		// 	return Promise.resolve(this.data);
+		// }
 
 		return new Promise(resolve => {
-						this.getShopData();
-						this.data = this.applyHaversine(this.shops);
-						var sortedArray = this.data.sort((locationA, locationB)=>{
-							return locationA.distance - locationB.distance;
+						this.getShopData().then(()=> {
+							this.data = this.applyHaversine(this.shops);
+  						this.data.sort((locationA, locationB)=>{
+  							return locationA.distance - locationB.distance;
+  						});
+  						resolve(this.data);
 						});
-						resolve(sortedArray);
+
+					});
 
 			// this.http.get('assets/data/locations.json').map(res => res.json()).subscribe(data => {
 			// 	this.data = this.applyHaversine(data.locations);
@@ -43,11 +47,11 @@ export class Locations {
 			// 	resolve(this.data);
 			// });
 
-		});
+	//	});
 	}
 
 	getShopData() {
-		this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
+		return this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
 			for(let index = 0; index <res.length; index++){
 	let currentShopInstance = res[index];
 	console.log(this.shops);
@@ -62,6 +66,7 @@ export class Locations {
 	}
 
 	applyHaversine(locations){
+
 	 	let usersLocation= {
 			lat: -19.9944433, lng :  57.5923818
 		}
@@ -71,16 +76,20 @@ export class Locations {
 
 							 usersLocation.lat = position.coords.latitude;
 							 usersLocation.lng = position.coords.longitude;
-							 console.log(usersLocation.lat);
+							 console.log("current user latitude"+usersLocation.lat);
 							 console.log(usersLocation.lng);
 			 });
 		}
+		console.log("The array size of shops is %f", this.shops.length);
 		this.shops.map((shop) => {
 			//get current shop longitude and latitude
 			let placeLocation = {
 				lat: shop.LocationLatitude,
 				lng: shop.locationLongitude
 			};
+
+			console.log("shop latitude"+shop.LocationLatitude);
+			console.log("shop longitude"+ shop.locationLongitude);
 
 			shop["distance"] = this.getDistanceBetweenPoints(
 				usersLocation,

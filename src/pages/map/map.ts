@@ -32,8 +32,8 @@ export class MapPage {
 
 	    		let locations = result[1];
 
-	    		for(let location of locations){
-	    			this.maps.addMarker(location.latitude, location.longitude);
+	    		for(let shop of locations){
+	    			this.maps.addMarker(shop.LocationLatitude, shop.locationLongitude);
 	    		}
 
 	    	});

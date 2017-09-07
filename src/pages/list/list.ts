@@ -20,13 +20,14 @@ public shops: Array<Shop>
   }
 
   ngOnInit(){
-    console.log(this.currentShopID);
-    this.getShopData();
+      this.getShopData();
+    // this.getShopData();
     // this.getDiscountData();
   }
   ngOnChanges(){
     // console.log(this.currentShopID);
-    this.getShopData();
+
+    this.locations.load();
     // this.getDiscountData();
   }
   getShopData() {
