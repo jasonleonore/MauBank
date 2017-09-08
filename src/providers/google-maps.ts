@@ -1,7 +1,11 @@
-import { Injectable, Component } from '@angular/core';
+import { Injectable, Component, Input } from '@angular/core';
 import { Connectivity } from './connectivity';
 import { Geolocation } from 'ionic-native';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { Locations } from './locations';
+import { shopservice } from '../providers/shopservice';
+import { Shop } from '../models/shop';
+import { Observable } from 'rxjs/Rx';
 
 declare var google;
 
@@ -22,6 +26,7 @@ class NavigationParameters {
 export class GoogleMaps {
 // @ViewChild('map') mapElement: ElementRef;
   mapElement: any;
+  @Input() currentShopID: number;
   pleaseConnect: any;
   map: any;
   mapInitialised: boolean = false;
@@ -31,11 +36,21 @@ export class GoogleMaps {
   apiKey: string;
   shoplatitude: any;
   shoplongitude: any;
+  private currentShop: Shop;
+  public shops: Array<Shop>
   public navCtrl: NavController;
-  constructor( public connectivityService: Connectivity,) {
-
+    private timer;
+  constructor( public connectivityService: Connectivity,public locations: Locations, private toastCtrl: ToastController, private shopservice: shopservice) {
+    this.shops = [];
   }
 
+  ngOnChanges(){
+    this.locations.load();
+  }
+  ngOnInit() {
+    this.timer = Observable.timer(1000, 2000);
+    this.timer.subscribe(t => this.showtoast());
+  }
 
   init(mapElement: any, pleaseConnect: any): Promise<any> {
 
@@ -96,6 +111,20 @@ export class GoogleMaps {
     });
 
   }
+  getShopData() {
+    return this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
+      for(let index = 0; index <res.length; index++){
+  let currentShopInstance = res[index];
+  console.log(this.shops);
+  this.shops.push(new Shop(currentShopInstance.ShopId, currentShopInstance.ShoppingCenterid, currentShopInstance.ShopName, currentShopInstance.locationLongitude, currentShopInstance.LocationLatitude,currentShopInstance.shopPicture,currentShopInstance.discount))
+}
+    },
+      err =>{
+        console.log(err);
+        alert(err);
+      }
+  )
+  }
 
   initMap(): Promise<any> {
 
@@ -113,16 +142,43 @@ export class GoogleMaps {
         let mapOptions = {
           center: latLng,
           zoom: 15,
+          radius: 50,
+          strokecolor:'#228f80',
+          strokeWidth: 3,
+          fillColor:'#bcddd8',
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
+        // this.map.addCircle({
+        //   'center': google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        //   'radius': 50,
+        //   'strokeColor': '#228f80',
+        //   'strokeWidth': 3,
+        //   'fillColor': '#bcddd8'
+        // });
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);
+
         resolve(true);
 
       });
 
     });
 
+  }
+  showtoast(){
+    for(let shop of this.locations.data ){
+      if(shop.distance>0.5){
+      let toast = this.toastCtrl.create({
+        message: 'There is a discount near you our application to see the discount',
+        duration: 3000
+      });
+      toast.present();
+    }
+    err =>{
+      console.log(err);
+      alert(err);
+    }
+  }
   }
 
   disableMap(): void {
