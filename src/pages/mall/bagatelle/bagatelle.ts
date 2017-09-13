@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController, NavController, Platform, ViewController } from 'ionic-angular';
+import { ModalController, NavController, Platform, ViewController, NavParams } from 'ionic-angular';
 import { MallPage } from '../mall';
 import { DiscountPage } from '../bagatelle/discount/discount';
 import { CityPage } from '../bagatelle/city/city';
@@ -21,14 +21,16 @@ export class BagatellePage {
   private currentDiscount: Discount;
 public shops: Array<Shop>
   public discounts: Array<Discount>;
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private shopservice: shopservice) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private shopservice: shopservice, public navParams: NavParams) {
     // this.shops = [];
     this.shops = [];
     this.discounts = [];
+    this.currentShopID = this.navParams.get("mall");
+    this.getShopData();
+      console.log(this.currentShopID);
   }
   ngOnInit(){
-    console.log(this.currentShopID);
-    this.getShopData();
+    console.log("Current shop ID is", this.currentShopID);
     // this.getDiscountData();
   }
   ngOnChanges(){
@@ -38,10 +40,11 @@ public shops: Array<Shop>
   }
   getShopData() {
     this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
+      console.log("new res test is",res);
 for(let index = 0; index <res.length; index++){
   let currentShopInstance = res[index];
   console.log(this.shops);
-  this.shops.push(new Shop(currentShopInstance.ShopId, currentShopInstance.ShoppingCenterid, currentShopInstance.ShopName, currentShopInstance.locationLongitude, currentShopInstance.LocationLatitude,currentShopInstance.shopPicture,currentShopInstance.discount))
+  this.shops.push(new Shop(currentShopInstance.ShopId, currentShopInstance.ShoppingCenterId, currentShopInstance.ShopName, currentShopInstance.locationLongitude, currentShopInstance.LocationLatitude,currentShopInstance.shopPicture,currentShopInstance.discount))
 }
     },
       err =>{

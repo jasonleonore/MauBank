@@ -17,6 +17,8 @@ export class Locations {
 	public shops: Array<Shop>;
 	data: any;
 	position: any;
+	public userlat: number;
+	public userlong: number;
 	constructor(public http: Http, private shopservice: shopservice) {
 		  this.shops = [];
 	}
@@ -49,13 +51,13 @@ export class Locations {
 
 	//	});
 	}
-
+//retrieve data from the database
 	getShopData() {
-		return this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
+		return this.shopservice.getShops(this.currentShopID).then((res:Array<Shop>) =>{
 			for(let index = 0; index <res.length; index++){
 	let currentShopInstance = res[index];
 	console.log(this.shops);
-	this.shops.push(new Shop(currentShopInstance.ShopId, currentShopInstance.ShoppingCenterid, currentShopInstance.ShopName, currentShopInstance.locationLongitude, currentShopInstance.LocationLatitude,currentShopInstance.shopPicture,currentShopInstance.discount))
+	this.shops.push(new Shop(currentShopInstance.ShopId, currentShopInstance.ShoppingCenterId, currentShopInstance.ShopName, currentShopInstance.locationLongitude, currentShopInstance.LocationLatitude,currentShopInstance.shopPicture,currentShopInstance.discount))
 }
 		},
 			err =>{
@@ -68,7 +70,9 @@ export class Locations {
 	applyHaversine(locations){
 
 	 	let usersLocation= {
+
 			lat: -19.9944433, lng :  57.5923818
+			// lat: 0, lng :  0
 		}
 		//get current user location
 		if(navigator.geolocation){

@@ -1,6 +1,6 @@
 export interface Ishop{
   ShopId: number;
-  ShoppingCenterid: number;
+  ShoppingCenterId: number;
   ShopName: string;
   locationLongitude: string;
   LocationLatitude: string;

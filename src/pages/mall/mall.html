@@ -4,24 +4,8 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="content-css">
-  <ion-card (click)="gotobagatellepage()">
-    <img src="assets/baga.png"/>
-    <div class="card-title">Bagatelle</div>
-    <!-- <div class="card-subtitle">41 Listings</div> -->
-  </ion-card>
-  <ion-card>
-    <img src="assets/super.png"/>
-    <div class="card-title">Super U</div>
-    <!-- <div class="card-subtitle">41 Listings</div> -->
-  </ion-card>
-  <ion-card>
-    <img src="assets/trianon.png"/>
-    <div class="card-title">Trianon Shopping Park</div>
-    <!-- <div class="card-subtitle">41 Listings</div> -->
-  </ion-card>
-  <ion-card>
-    <img src="assets/croisette.png"/>
-    <div class="card-title">La Croisette</div>
-    <!-- <div class="card-subtitle">41 Listings</div> -->
+  <ion-card (click)="gotobagatellepage(Mall.ShoppingCenterId)" *ngFor="let Mall of this.malls">
+    <img src="{{Mall.ShoppingCenterPicture}}"/>
+    <div class="card-title">{{Mall.ShoppingCenterName}}</div>
   </ion-card>
 </ion-content>
