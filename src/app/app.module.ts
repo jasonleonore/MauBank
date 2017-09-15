@@ -14,6 +14,9 @@ import { DiscountPage } from '../pages/mall/bagatelle/discount/discount';
 import { CityPage } from '../pages/mall/bagatelle/city/city';
 import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
 import { BataPage } from '../pages/mall/bagatelle/bata/bata';
+import { ShopsPage } from '../pages/shops/shops';
+// import { Push } from '@ionic-native/push';
+
 
 @NgModule({
   declarations: [
@@ -26,8 +29,8 @@ import { BataPage } from '../pages/mall/bagatelle/bata/bata';
     DiscountPage,
     CityPage,
     ShafiqPage,
-    BataPage
-
+    BataPage,
+    ShopsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -43,7 +46,8 @@ import { BataPage } from '../pages/mall/bagatelle/bata/bata';
     DiscountPage,
     CityPage,
     ShafiqPage,
-    BataPage
+    BataPage,
+    ShopsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Locations, GoogleMaps, Connectivity, shopservice]
 })
