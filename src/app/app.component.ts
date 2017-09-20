@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Platform,AlertController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-// import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import {  PushOptions, PushObject,Push } from '@ionic-native/push';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 @Component({
@@ -17,10 +17,46 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      // this.pushsetup();
     });
   }
+  // this.push.register().then((t: PushToken) => {
+  //   return this.push.saveToken(t);
+  // }).then((t: PushToken) => {
+  //   console.log('Token saved:', t.token);
+  // });
+  // this.push.rx.notification()
+  // .subscribe((msg) => {
+  //   alert(msg.title + ': ' + msg.text);
+  // });
+
+//   pushsetup(){
+//      const options: PushOptions = {
+//        android: {
+//          senderID: '829511495115'
+//        },
+//        ios: {
+//          alert: 'true',
+//          badge: false,
+//          sound: 'true'
+//        },
+//        windows: {}
+//      };
+//      const pushObject: PushObject = this.push.init(options);
+//      pushObject.on('notification').subscribe((notification:any) => {
+//        if(notification.additionalData.foreground){
+//          let youralert = this.alertCtrl.create({
+//            title: 'New Push Notification',
+//            message: notification.message
+//          });
+//          youralert.present();
+//        }
+//      });
+//      pushObject.on('registration').subscribe((registration:any) => console.log('device registered' + registration))
+//      pushObject.on('error').subscribe(error => console.log('error with push plugin' + error))
+// }
   // code to instantiate a push notification for the user
-  initPushNotification() {
+
     //  if (!this.platform.is('cordova')) {
     //    console.warn('Push notifications not initialized. Cordova is not available - Run in physical device');
     //    return;
@@ -70,5 +106,5 @@ export class MyApp {
     //      console.log('Push notification clicked');
     //    }
     //  });
-}
+
 }
