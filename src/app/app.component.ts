@@ -18,6 +18,14 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       // this.pushsetup();
+      var notificationOpenedCallback = function(jsonData) {
+      alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    };
+
+    window["plugins"].OneSignal
+      .startInit("870b753f-7d08-4c8b-a42f-4e99ee5d862f", "829511495115")
+      .handleNotificationOpened(notificationOpenedCallback)
+      .endInit();
     });
   }
   // this.push.register().then((t: PushToken) => {

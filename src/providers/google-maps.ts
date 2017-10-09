@@ -60,6 +60,7 @@ export class GoogleMaps {
     return this.loadGoogleMaps();
 
   }
+  //loading the map
 
   loadGoogleMaps(): Promise<any> {
 
@@ -111,6 +112,7 @@ export class GoogleMaps {
     });
 
   }
+  //get the details of all the shops from the database
   getShopData() {
     return this.shopservice.getShop(this.currentShopID).then((res:Array<Shop>) =>{
       for(let index = 0; index <res.length; index++){

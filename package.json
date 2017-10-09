@@ -53,9 +53,7 @@
     ],
     "description": "MauBank business Partners",
     "cordova": {
-        "platforms": [
-            "android"
-        ],
+        "platforms": [],
         "plugins": {
             "cordova-plugin-geolocation": {},
             "cordova-plugin-whitelist": {}

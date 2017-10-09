@@ -29,7 +29,6 @@ export class Locations {
 		// 	this.getShopData();
 		// 	return Promise.resolve(this.data);
 		// }
-
 		return new Promise(resolve => {
 						this.getShopData().then(()=> {
 							this.data = this.applyHaversine(this.shops);
