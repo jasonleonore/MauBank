@@ -1,0 +1,40 @@
+<ion-header class="tool-css">
+  <ion-navbar color="secondary">
+    <ion-title>
+       Shop Partners
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="Maushops">
+     <ion-segment-button value="All Shops" name= "All Shops">
+       All Shops
+     </ion-segment-button>
+     <ion-segment-button value="Region Shops" name= "Region Shops">
+       Region Shops
+     </ion-segment-button>
+   </ion-segment>
+ </ion-toolbar>
+</ion-header>
+<ion-content [ngSwitch]="Maushops">
+  <ion-list *ngSwitchCase="'All Shops'">
+    <ion-item-sliding *ngFor="let Shop of this.shops" >
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img  src="{{Shop.shopPicture}}"/>
+          </ion-thumbnail>
+          <h2>{{Shop.ShopName}}</h2>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="secondary" (click)="gotodiscount(Shop.ShopId)" icon-start>
+            <ion-icon name="flag"></ion-icon>
+            Discount
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
+</ion-list>
+<ion-list *ngSwitchCase="'Region Shops'">
+  <ion-item>
+    <p>Under Construction</p>
+  </ion-item>
+</ion-list>
+</ion-content>

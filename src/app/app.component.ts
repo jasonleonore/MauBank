@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import {  PushOptions, PushObject,Push } from '@ionic-native/push';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+// import { OneSignal } from '@ionic-native/onesignal';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,14 +20,20 @@ export class MyApp {
       Splashscreen.hide();
       // this.pushsetup();
       var notificationOpenedCallback = function(jsonData) {
-      alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
     };
 
     window["plugins"].OneSignal
       .startInit("870b753f-7d08-4c8b-a42f-4e99ee5d862f", "829511495115")
       .handleNotificationOpened(notificationOpenedCallback)
+      .getIds(function(userDetails){
+        console.log(userDetails.userId);
+        console.log(userDetails.PushToken);
+      })
       .endInit();
+
     });
+
   }
   // this.push.register().then((t: PushToken) => {
   //   return this.push.saveToken(t);

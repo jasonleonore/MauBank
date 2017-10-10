@@ -15,6 +15,7 @@ import { CityPage } from '../pages/mall/bagatelle/city/city';
 import { ShafiqPage } from '../pages/mall/bagatelle/shafiq/shafiq';
 import { BataPage } from '../pages/mall/bagatelle/bata/bata';
 import { ShopsPage } from '../pages/shops/shops';
+// import {OneSignal} from '@ionic-native/onesignal';
 // import { Push } from '@ionic-native/push';
 
 
