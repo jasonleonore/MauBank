@@ -3,7 +3,6 @@ import { NavController, Platform,AlertController, Nav, NavParams } from 'ionic-a
 import { Locations } from '../../providers/locations';
 import { shopservice } from '../../providers/shopservice';
 import { Shop } from '../../models/shop';
-import {Http, Headers, RequestOptions} from '@angular/http';
 // import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Discount } from '../../mall/bagatelle/discount/discount';
 
@@ -52,25 +51,5 @@ for(let index = 0; index <res.length; index++){
       }
   )
   }
-  // sendDistance(){
-  //     for(let Shop of this.locations.data){
-  //       if(Shop.distance<1){
-  //         var headers = new Headers();
-  //         headers.append('Content-Type', 'application/json');
-  //         return new Promise(resolve => {
-  //           this.http.put(Shop.ShopName, new RequestOptions({ headers: headers }))
-  //             .subscribe((res) => {
-  //               resolve(res.json());
-  //             },
-  //             err => {
-  //               console.log("ERROR!: Status:" + err.status);
-  //               console.log("ERROR!:" + err);
-  //               console.log("ERROR!: Status JSON:" + err.json());
-  //             });
-  //         })
-  //
-  //       }
-  //     }
-  // }
 
 }

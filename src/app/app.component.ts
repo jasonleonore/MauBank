@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import {  PushOptions, PushObject,Push } from '@ionic-native/push';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { MallPage } from '../pages/mall/mall';
 // import { OneSignal } from '@ionic-native/onesignal';
 @Component({
   templateUrl: 'app.html'
@@ -18,23 +19,59 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
-      // this.pushsetup();
+
+      // Set your iOS Settings
+      var iosSettings = {};
+      iosSettings["kOSSettingsKeyAutoPrompt"] = false; // will not prompt users when start app 1st time
+      iosSettings["kOSSettingsKeyInAppLaunchURL"] = false; // false opens safari with Launch URL
+
+      // OneSignal Code start:
+      // Enable to debug issues.
+      // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
       var notificationOpenedCallback = function(jsonData) {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    };
+        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+        if (jsonData.notification.payload.additionalData != null) {
+          console.log("Here we access addtional data");
+          if (jsonData.notification.payload.additionalData.openURL != null) {
+            console.log("Here we access the openURL sent in the notification data");
+
+          }
+        }
+      };
+
+      // this.pushsetup();
+    //   var notificationOpenedCallback = function(jsonData) {
+    //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    // };
 
     window["plugins"].OneSignal
-      .startInit("870b753f-7d08-4c8b-a42f-4e99ee5d862f", "829511495115")
-      .handleNotificationOpened(notificationOpenedCallback)
-      .getIds(function(userDetails){
-        console.log(userDetails.userId);
-        console.log(userDetails.PushToken);
-      })
-      .endInit();
+    //initialised the appId and registration token obtained from onesignal
+    .startInit("870b753f-7d08-4c8b-a42f-4e99ee5d862f", "829511495115")
+    .iOSSettings(iosSettings) // only needed if added Optional OneSignal code for iOS above
+    .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
+    .handleNotificationOpened(notificationOpenedCallback)
+    .endInit();
+
+
 
     });
+    // this.getOneSignalPlayerId();
 
   }
+  getOneSignalPlayerId() {
+        window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
+          status.permissionStatus.hasPrompted;
+          status.permissionStatus.status;
+
+          status.subscriptionStatus.subscribed;
+          status.subscriptionStatus.userSubscriptionSetting;
+          status.subscriptionStatus.pushToken;
+
+          //var playerID = status.subscriptionStatus.userId;
+          console.log("player id is"+status.subscriptionStatus.userId);
+      });
+      }
   // this.push.register().then((t: PushToken) => {
   //   return this.push.saveToken(t);
   // }).then((t: PushToken) => {

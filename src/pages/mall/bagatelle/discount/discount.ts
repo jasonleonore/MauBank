@@ -66,7 +66,7 @@ export class DiscountPage {
   )
   }
   dismiss(){
-    this.navCtrl.push(BagatellePage);
+    this.navCtrl.pop(BagatellePage);
   }
 
 }

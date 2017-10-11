@@ -18,12 +18,13 @@
 <ion-content [ngSwitch]="Maushops">
   <ion-list *ngSwitchCase="'All Shops'">
     <ion-item-sliding *ngFor="let Shop of this.shops" >
-        <ion-item>
+        <button ion-item (click)="gotodiscount(Shop.ShopId)">
           <ion-thumbnail item-start>
             <img  src="{{Shop.shopPicture}}"/>
           </ion-thumbnail>
           <h2>{{Shop.ShopName}}</h2>
-        </ion-item>
+          <!-- <h2 item-end>Slide</h2> -->
+        </button>
         <ion-item-options>
           <button ion-button color="secondary" (click)="gotodiscount(Shop.ShopId)" icon-start>
             <ion-icon name="flag"></ion-icon>

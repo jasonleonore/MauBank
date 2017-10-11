@@ -3,6 +3,7 @@ import { MapPage } from '../map/map';
 import { ListPage } from '../list/list';
 import { MallPage } from '../mall/mall';
 import { ShopsPage } from '../shops/shops';
+import { SettingPage } from '../setting/setting';
 
 @Component({
   selector: 'page-home',
@@ -14,6 +15,7 @@ export class HomePage {
   tab2Root: any = ListPage;
   tab3Root: any = MallPage;
   tab4Root: any = ShopsPage;
+  tab5Root: any = SettingPage;
 
   constructor(){
 
