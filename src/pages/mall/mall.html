@@ -3,9 +3,11 @@
     <ion-title>Shopping Malls</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="content-css">
+<ion-content  class="content-css">
+<!-- <button ion-button round (click)="getOneSignalPlayerId()">Round Button</button> -->
   <ion-card (click)="gotobagatellepage(Mall.ShoppingCenterId)" *ngFor="let Mall of this.malls">
     <img src="{{Mall.ShoppingCenterPicture}}"/>
     <div class="card-title">{{Mall.ShoppingCenterName}}</div>
   </ion-card>
+
 </ion-content>

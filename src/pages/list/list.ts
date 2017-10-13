@@ -2,6 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { NavController, Platform,AlertController, Nav, NavParams } from 'ionic-angular';
 import { Locations } from '../../providers/locations';
 import { shopservice } from '../../providers/shopservice';
+import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import { Shop } from '../../models/shop';
 // import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Discount } from '../../mall/bagatelle/discount/discount';
@@ -15,10 +16,12 @@ export class ListPage {
 private navCtrl: NavController
 @Input() currentShopID: number;
 private currentShop: Shop;
+  public sendIdUrl: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/pushnotification/02100c0b-2c6a-4e50-8f01-9c5b24a7dacc/2';
 public shops: Array<Shop>
+// public playerID: string;
 @ViewChild(Nav) nav: Nav;
 pushMessage: string = 'Amazing discounts near you';
-  constructor( public locations: Locations, private shopservice: shopservice, public platform: Platform, public alertCtrl: AlertController, public params: NavParams) {
+  constructor( public locations: Locations, private shopservice: shopservice,public http:Http, public platform: Platform, public alertCtrl: AlertController, public params: NavParams) {
     this.shops = [];
   //   if (params.data.message) {
   //   this.pushMessage = params.data.message;
@@ -35,6 +38,101 @@ pushMessage: string = 'Amazing discounts near you';
 
     this.locations.load();
     // this.getDiscountData();
+  }
+  getOneSignalPlayerId() {
+    window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
+      status.permissionStatus.hasPrompted;
+      status.permissionStatus.status;
+
+      status.subscriptionStatus.subscribed;
+      status.subscriptionStatus.userSubscriptionSetting;
+      status.subscriptionStatus.pushToken;
+
+
+      var playerID = status.subscriptionStatus.userId;
+      alert("playerid is"+status.subscriptionStatus.userId);
+      console.log("playerid is"+status.subscriptionStatus.userId);
+      // var headers = new Headers();
+      // headers.append('Content-Type', 'application/json');
+      // // ShoppingCenterId=0;
+      // return new Promise(resolve=>{
+      //
+      //   this.http.get(this.sendIdUrl)
+      //     .subscribe((res) => {
+      //       let mydata = res.json();
+      //       console.log("res Shop is", mydata);
+      //       if(mydata.ResponseObject.length > 0)
+      //         resolve(mydata.ResponseObject);
+      //       else
+      //       resolve(res.json());
+      //     },
+      //     err => {
+      //       console.log("ERROR!: Status:" + err.status);
+      //       console.log("ERROR!:" + err);
+      //       console.log("ERROR!: Status JSON:" + err.json());
+      //       // alert(err.json().errors[0]['detail']);
+      //       var description: string = '';
+      //       if (err.status === 400) {
+      //         description = err.json().errors[0]['detail'];
+      //       }
+      //       if (err.status === 401) {
+      //         description = err.json().errors[0]['detail'];
+      //       }
+      //       else {
+      //         description = err;
+      //       }
+      //       let errorLoginAlert = this.alertCtrl.create({
+      //         title: 'Erreur ' + err.status,
+      //         subTitle: description,
+      //         buttons: [{
+      //           text: 'OK',
+      //         }]
+      //       });
+      //       errorLoginAlert.present();
+      //     });
+      // })
+  });
+  }
+  sendId(){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    // ShoppingCenterId=0;
+    return new Promise(resolve=>{
+
+      this.http.get(this.sendIdUrl)
+        .subscribe((res) => {
+          let mydata = res.json();
+          console.log("res Shop is", mydata);
+          if(mydata.ResponseObject.length > 0)
+            resolve(mydata.ResponseObject);
+          else
+          resolve(res.json());
+        },
+        err => {
+          console.log("ERROR!: Status:" + err.status);
+          console.log("ERROR!:" + err);
+          console.log("ERROR!: Status JSON:" + err.json());
+          // alert(err.json().errors[0]['detail']);
+          var description: string = '';
+          if (err.status === 400) {
+            description = err.json().errors[0]['detail'];
+          }
+          if (err.status === 401) {
+            description = err.json().errors[0]['detail'];
+          }
+          else {
+            description = err;
+          }
+          let errorLoginAlert = this.alertCtrl.create({
+            title: 'Erreur ' + err.status,
+            subTitle: description,
+            buttons: [{
+              text: 'OK',
+            }]
+          });
+          errorLoginAlert.present();
+        });
+    })
   }
   //get data from the database
   getShopData() {

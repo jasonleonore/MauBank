@@ -21,36 +21,35 @@ export class MyApp {
       Splashscreen.hide();
 
       // Set your iOS Settings
-      var iosSettings = {};
-      iosSettings["kOSSettingsKeyAutoPrompt"] = false; // will not prompt users when start app 1st time
-      iosSettings["kOSSettingsKeyInAppLaunchURL"] = false; // false opens safari with Launch URL
+      // var iosSettings = {};
+      // iosSettings["kOSSettingsKeyAutoPrompt"] = false; // will not prompt users when start app 1st time
+      // iosSettings["kOSSettingsKeyInAppLaunchURL"] = false; // false opens safari with Launch URL
 
       // OneSignal Code start:
       // Enable to debug issues.
       // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
-      var notificationOpenedCallback = function(jsonData) {
-        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-        if (jsonData.notification.payload.additionalData != null) {
-          console.log("Here we access addtional data");
-          if (jsonData.notification.payload.additionalData.openURL != null) {
-            console.log("Here we access the openURL sent in the notification data");
-
-          }
-        }
-      };
+      // var notificationOpenedCallback = function(jsonData) {
+      //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      //   if (jsonData.notification.payload.additionalData != null) {
+      //     console.log("Here we access addtional data");
+      //     if (jsonData.notification.payload.additionalData.openURL != null) {
+      //       console.log("Here we access the openURL sent in the notification data");
+      //
+      //     }
+      //   }
+      // };
 
       // this.pushsetup();
-    //   var notificationOpenedCallback = function(jsonData) {
-    //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    // };
+      var notificationOpenedCallback = function(jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    };
 
     window["plugins"].OneSignal
     //initialised the appId and registration token obtained from onesignal
     .startInit("870b753f-7d08-4c8b-a42f-4e99ee5d862f", "829511495115")
-    .iOSSettings(iosSettings) // only needed if added Optional OneSignal code for iOS above
-    .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
-    .handleNotificationOpened(notificationOpenedCallback)
+    // .iOSSettings(iosSettings) // only needed if added Optional OneSignal code for iOS above
+  .handleNotificationOpened(notificationOpenedCallback)
     .endInit();
 
 
@@ -69,6 +68,7 @@ export class MyApp {
           status.subscriptionStatus.pushToken;
 
           //var playerID = status.subscriptionStatus.userId;
+          alert("player id is"+status.subscriptionStatus.userId);
           console.log("player id is"+status.subscriptionStatus.userId);
       });
       }

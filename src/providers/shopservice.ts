@@ -3,24 +3,27 @@ import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import { Locations } from '../providers/locations';
 import { AlertController, Nav } from 'ionic-angular';
 import {Observable} from 'rxjs/Rx';
+import { Ishop } from '../interfaces/shop';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+
 @Injectable()
 export class shopservice{
+
   @ViewChild(Nav) nav: Nav;
-  public playerID: string;
+  // public playerID: string;
 //web api URLS
   private getShopsURL: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/getallpartners';
   private getShopURL: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/shoppingcenter/';
   private getDiscountURL: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/partner/';
   private getMallURL: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/shoppingcenters';
-  private sendIdUrl: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/pushnotification';
+  private sendIdUrl: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/pushnotification/';
 
   constructor(public http: Http, private alertCtrl: AlertController) {
 }
 ngOnInit(){
-  this.sendId();
+  // this.sendId();
 }
 //send shopname to the server side
 // sendDistance(){
@@ -43,54 +46,76 @@ ngOnInit(){
 //       }
 //     }
 // }
-getOneSignalPlayerId() {
-  window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
-    status.permissionStatus.hasPrompted;
-    status.permissionStatus.status;
-
-    status.subscriptionStatus.subscribed;
-    status.subscriptionStatus.userSubscriptionSetting;
-    status.subscriptionStatus.pushToken;
-
-
-    this.playerID = status.subscriptionStatus.userId;
-    alert("playerid is"+status.subscriptionStatus.userId);
-});
-}
-sendId(){
-  var headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  return new Promise(resolve => {
-    this.http.post(this.sendIdUrl, this.playerID, new RequestOptions({ headers: headers }))
-      .subscribe((res) => {
-        resolve(res.json());
-      },
-      err => {
-        console.log("ERROR!: Status:" + err.status);
-        console.log("ERROR!:" + err);
-        console.log("ERROR!: Status JSON:" + err.json());
-        // alert(err.json().errors[0]['detail']);
-        var description: string = '';
-        if (err.status === 400) {
-          description = err.json().errors[0]['detail'];
-        }
-        if (err.status === 401) {
-          description = err.json().errors[0]['detail'];
-        }
-        else {
-          description = err;
-        }
-        let errorLoginAlert = this.alertCtrl.create({
-          title: 'Erreur ' + err.status,
-          subTitle: description,
-          buttons: [{
-            text: 'OK',
-          }]
-        });
-        errorLoginAlert.present();
-      });
-  })
-}
+// getOneSignalPlayerId() {
+//   window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
+//     status.permissionStatus.hasPrompted;
+//     status.permissionStatus.status;
+//
+//     status.subscriptionStatus.subscribed;
+//     status.subscriptionStatus.userSubscriptionSetting;
+//     status.subscriptionStatus.pushToken;
+//
+//
+//     this.playerID = status.subscriptionStatus.userId;
+//     alert("playerid is"+status.subscriptionStatus.userId);
+// });
+// }
+// sendId(ShopId: Ishop){
+//   var headers = new Headers();
+//   headers.append('Content-Type', 'application/json');
+//   return new Promise(resolve => {
+//     this.http.put(this.sendIdUrl, new RequestOptions({ headers: headers }))
+//       .subscribe((res) => {
+//         resolve(res.json());
+//       },
+//       err => {
+//         console.log("ERROR!: Status:" + err.status);
+//         console.log("ERROR!:" + err);
+//         console.log("ERROR!: Status JSON:" + err.json());
+//       });
+//   })
+// }
+// sendId(){
+//   var headers = new Headers();
+//   headers.append('Content-Type', 'application/json');
+//   // ShoppingCenterId=0;
+//   return new Promise(resolve=>{
+//
+//     this.http.get(`${this.sendIdUrl}${this.playerID}/2`)
+//       .subscribe((res) => {
+//         let mydata = res.json();
+//         console.log("res Shop is", mydata);
+//         if(mydata.ResponseObject.length > 0)
+//           resolve(mydata.ResponseObject);
+//         else
+//         resolve(res.json());
+//       },
+//       err => {
+//         console.log("ERROR!: Status:" + err.status);
+//         console.log("ERROR!:" + err);
+//         console.log("ERROR!: Status JSON:" + err.json());
+//         // alert(err.json().errors[0]['detail']);
+//         var description: string = '';
+//         if (err.status === 400) {
+//           description = err.json().errors[0]['detail'];
+//         }
+//         if (err.status === 401) {
+//           description = err.json().errors[0]['detail'];
+//         }
+//         else {
+//           description = err;
+//         }
+//         let errorLoginAlert = this.alertCtrl.create({
+//           title: 'Erreur ' + err.status,
+//           subTitle: description,
+//           buttons: [{
+//             text: 'OK',
+//           }]
+//         });
+//         errorLoginAlert.present();
+//       });
+//   })
+// }
 //retrieve all the shops from the web api
 getShops(ShoppingCenterId: number) {
   var headers = new Headers();
