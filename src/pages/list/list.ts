@@ -16,8 +16,9 @@ export class ListPage {
 private navCtrl: NavController
 @Input() currentShopID: number;
 private currentShop: Shop;
-  public sendIdUrl: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/pushnotification/02100c0b-2c6a-4e50-8f01-9c5b24a7dacc/2';
+  public sendIdUrl: string = 'http://198.38.93.107/ServerWebApi/api/MAUPartners/pushnotification/';
 public shops: Array<Shop>
+public playerID: any;
 // public playerID: string;
 @ViewChild(Nav) nav: Nav;
 pushMessage: string = 'Amazing discounts near you';
@@ -30,14 +31,23 @@ pushMessage: string = 'Amazing discounts near you';
 
   ngOnInit(){
       this.getShopData();
+      this.sendnotif();
     // this.getShopData();
     // this.getDiscountData();
   }
   ngOnChanges(){
     // console.log(this.currentShopID);
-
+  this.sendnotif();
     this.locations.load();
+
     // this.getDiscountData();
+  }
+  sendnotif(){
+    console.log("current distance is "+this.locations.data.shops.distance);
+    if(this.locations.data.shops.distance<1){
+      this.sendId();
+
+    }
   }
   getOneSignalPlayerId() {
     window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
@@ -49,48 +59,10 @@ pushMessage: string = 'Amazing discounts near you';
       status.subscriptionStatus.pushToken;
 
 
-      var playerID = status.subscriptionStatus.userId;
+       var playerID = status.subscriptionStatus.userId;
       alert("playerid is"+status.subscriptionStatus.userId);
       console.log("playerid is"+status.subscriptionStatus.userId);
-      // var headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // // ShoppingCenterId=0;
-      // return new Promise(resolve=>{
-      //
-      //   this.http.get(this.sendIdUrl)
-      //     .subscribe((res) => {
-      //       let mydata = res.json();
-      //       console.log("res Shop is", mydata);
-      //       if(mydata.ResponseObject.length > 0)
-      //         resolve(mydata.ResponseObject);
-      //       else
-      //       resolve(res.json());
-      //     },
-      //     err => {
-      //       console.log("ERROR!: Status:" + err.status);
-      //       console.log("ERROR!:" + err);
-      //       console.log("ERROR!: Status JSON:" + err.json());
-      //       // alert(err.json().errors[0]['detail']);
-      //       var description: string = '';
-      //       if (err.status === 400) {
-      //         description = err.json().errors[0]['detail'];
-      //       }
-      //       if (err.status === 401) {
-      //         description = err.json().errors[0]['detail'];
-      //       }
-      //       else {
-      //         description = err;
-      //       }
-      //       let errorLoginAlert = this.alertCtrl.create({
-      //         title: 'Erreur ' + err.status,
-      //         subTitle: description,
-      //         buttons: [{
-      //           text: 'OK',
-      //         }]
-      //       });
-      //       errorLoginAlert.present();
-      //     });
-      // })
+
   });
   }
   sendId(){
@@ -99,7 +71,7 @@ pushMessage: string = 'Amazing discounts near you';
     // ShoppingCenterId=0;
     return new Promise(resolve=>{
 
-      this.http.get(this.sendIdUrl)
+      this.http.get(this.sendIdUrl+"/"+this.playerID+"/"+this.currentShop.ShopId)
         .subscribe((res) => {
           let mydata = res.json();
           console.log("res Shop is", mydata);
